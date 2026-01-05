@@ -1,0 +1,60 @@
+name: Build and push to ACR
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build-push:
+    runs-on:
+      group: ubuntu runner
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: '21'
+
+      - name: Verify Maven Version
+        run:
+
+
+      - name: Run Maven Build
+        run: mvn -B -ntp clean install
+
+      - name: Azure Login
+        uses: azure/log@v1
+        with:
+          creds: ${{secrets.azure}}
+
+      - name: log in to ACR
+        run:
+          az acr login --name containerrefistry
+
+      - name: Build and push Docker Image to ACR
+        run:
+          docker build -t
+          docker push $
+
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Get AKS credntial
+        run:
+          az aks credintial\
+
+      - name: deploy to AKS using helm
+        run:
+
+
+      - name: verify rollout status
+        run:
+
+      - name: wait for health status endpoint to retunr 200(ignore self-signed ssl)
+        run:
+
